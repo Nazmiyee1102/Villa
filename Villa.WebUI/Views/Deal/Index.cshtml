@@ -1,0 +1,64 @@
+﻿@model List<ResultDealDto>
+
+@{
+    ViewData["Title"] = "Tekliflerimiz";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table class="table table-hover table-bordered">
+    @{
+        int count = 0;
+    }
+    <tr>
+        <th>#</th>
+        <th>İlan Türü</th>
+        <th>Resim Url</th>
+        <th>Başlık</th>
+        <th>Açıklama</th>
+        <th>m2</th>
+        <th>Kat</th>
+        <th>Park Alanı</th>
+        <th>Ödeme</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <th>@item.Type</th>
+            <th>@item.ImageUrl</th>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
+            <td>@item.Square</td>
+            <td>@item.Floor</td>
+            <td>@item.HasParkingArea</td>
+            <td>@item.PaymentType</td>
+            <td>
+                <button onclick="deleteDeal(this)" id="@item.Id" class="btn btn-outline-info">Güncelle</button>
+                <a asp-controller="Deal" asp-action="DeleteDeal" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Deal" asp-action="CreateDeal" class="btn btn-outline-dark"> Yeni Teklif Ekle</a>
+
+<script>
+    function deleteDeal(button) {
+        var id = button.getAttribute("id");
+        Swal.fire({
+      title: 'Silmek istediğinize emin misini?',
+      text: 'Bu işlemi geri alamazsınız!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Evet , Sil!",
+      canselButtonText:"İptal"
+    }).then((result) => {
+      if (result.isConfirmed) {
+      window.location.href = "/Deal/DeleteDeal/" + id;
+      }
+    });
+    }
+</script>
