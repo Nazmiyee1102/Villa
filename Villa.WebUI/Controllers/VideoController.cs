@@ -44,5 +44,20 @@ namespace Villa.WebUI.Controllers
             await _videoService.TCreateAsync(newVideo);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> UpdateVideo(ObjectId id)
+        {
+            var video = await _videoService.TGetByIdAsync(id);
+            var videoDto = _mapper.Map<UpdateVideoDto>(video);
+            return View(videoDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateVideo(UpdateVideoDto updateVideoDto)
+        {
+            var video = _mapper.Map<Video>(updateVideoDto);
+            await _videoService.TUpdateAsync(video);
+            return RedirectToAction("Index");
+        }
     }
 }

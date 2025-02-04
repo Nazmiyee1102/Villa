@@ -44,5 +44,20 @@ namespace Villa.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> UpdateFeature(ObjectId id)
+        {
+            var feature = await _featureService.TGetByIdAsync(id);
+            var featureDto = _mapper.Map<UpdateFeatureDto>(feature);
+            return View(featureDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
+        {
+            var feature = _mapper.Map<Feature>(updateFeatureDto);
+            await _featureService.TUpdateAsync(feature);
+            return RedirectToAction("Index");
+        }
+
     }
 }
