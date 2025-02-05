@@ -23,7 +23,6 @@ namespace Villa.Business.Validators
             RuleFor(x => x.SubTitle).MinimumLength(5).WithMessage("En az 5 karakter girebilirsiniz!");
             RuleFor(x => x.Square).NotEmpty().WithMessage("Metrekare boş bırakılamaz!");
             RuleFor(x => x.Square).MaximumLength(100).WithMessage("En fazla 100 karakter girebilirsiniz!");
-            RuleFor(x => x.Square).MinimumLength(5).WithMessage("En az 5 karakter girebilirsiniz!");
             RuleFor(x => x.Contract).NotEmpty().WithMessage("Kontrat boş bırakılamaz!");
             RuleFor(x => x.Contract).MaximumLength(100).WithMessage("En fazla 100 karakter girebilirsiniz!");
             RuleFor(x => x.Contract).MinimumLength(5).WithMessage("En az 5 karakter girebilirsiniz!");
