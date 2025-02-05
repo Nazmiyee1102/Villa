@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Villa.Business.Abstract;
+using Villa.Business.Validators;
 using Villa.Dto.Dtos.ContactDtos;
 using Villa.Entity.Entities;
 
@@ -39,9 +40,20 @@ namespace Villa.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateContact(CreateContactDto createContactDto)
         {
-                var newContact = _mapper.Map<Contact>(createContactDto);
-                await _contactService.TCreateAsync(newContact);
-                return RedirectToAction("Index");
+            ModelState.Clear();
+            var newContact = _mapper.Map<Contact>(createContactDto);
+            var validator = new ContactValidators();
+            var result = validator.Validate(newContact);
+            if (!result.IsValid)
+            {
+                result.Errors.ForEach(x =>
+                {
+                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
+                });
+                return View();
+            }
+            await _contactService.TCreateAsync(newContact);
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UpdateContact(ObjectId id)//id ye göre getirme

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Villa.Business.Abstract;
+using Villa.Business.Validators;
 using Villa.Dto.Dtos.CounterDtos;
 using Villa.Entity.Entities;
 
@@ -39,7 +40,18 @@ namespace Villa.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Createcounter(CreateCounterDto createcounterDto)
         {
+            ModelState.Clear();
             var newCounter = _mapper.Map<Counter>(createcounterDto);
+            var validator = new CounterValidators();
+            var result = validator.Validate(newCounter);
+            if (!result.IsValid)
+            {
+                result.Errors.ForEach(x =>
+                {
+                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
+                });
+                return View();
+            }
             await _counterService.TCreateAsync(newCounter);
             return RedirectToAction("Index");
         }

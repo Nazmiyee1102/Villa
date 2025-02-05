@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Villa.Business.Abstract;
+using Villa.Business.Validators;
 using Villa.Dto.Dtos.MessageDtos;
 using Villa.Dto.Dtos.ProductDtos;
 using Villa.Entity.Entities;
@@ -40,7 +41,18 @@ namespace Villa.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
         {
+            ModelState.Clear();
             var newProduct = _mapper.Map<Product>(createProductDto);
+            var validator = new ProductValidators();
+            var result = validator.Validate(newProduct);
+            if (!result.IsValid)
+            {
+                result.Errors.ForEach(x =>
+                {
+                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
+                });
+                return View();
+            }
             await _productService.TCreateAsync(newProduct);
             return RedirectToAction("Index");
         }

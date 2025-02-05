@@ -8,12 +8,15 @@
 <form method="post">
     <label>Harita Url</label>
     <input type="text" asp-for="MapUrl" class="form-control" />
+    <span asp-validation-for="MapUrl" class="text-danger"></span>
     <br />
     <label>Telefon</label>
     <input type="text" asp-for="Phone" class="form-control" />
+    <span asp-validation-for="Phone" class="text-danger"></span>
     <br />
     <label>Email</label>
     <input type="text" asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
     <br />
     <button class="btn btn-outline-dark">Kaydet</button>
 </form>

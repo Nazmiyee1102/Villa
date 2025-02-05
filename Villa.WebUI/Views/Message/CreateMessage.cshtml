@@ -9,18 +9,22 @@
 
     <label>Ad Soyad</label>
     <input type="text" asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
     <br />
 
     <label>Email</label>
     <input type="text" asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
     <br />
 
     <label>Konu</label>
     <input type="text" asp-for="Subject" class="form-control" />
+    <span asp-validation-for="Subject" class="text-danger"></span>
     <br />
 
     <label>Mesaj İçeriği</label>
     <textarea asp-for="MessageContent" class="form-control" rows="10"></textarea>
+    <span asp-validation-for="MessageContent" class="text-danger"></span>
     <br />
 
     <button class="btn btn-outline-dark">Kaydet</button>

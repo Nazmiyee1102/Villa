@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Villa.Business.Abstract;
+using Villa.Business.Validators;
 using Villa.Dto.Dtos.BannerDtos;
 using Villa.Entity.Entities;
 
@@ -39,7 +40,18 @@ namespace Villa.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBanner(CreateBannerDto createBannerDto)
         {
+            ModelState.Clear();
             var newBanner = _mapper.Map<Banner>(createBannerDto);
+            var validator = new BannerValidators();
+            var result = validator.Validate(newBanner);
+            if (!result.IsValid)
+            {
+                result.Errors.ForEach(x =>
+                {
+                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
+                });
+                return View();
+            }
             await _bannerService.TCreateAsync(newBanner);
             return RedirectToAction("Index");
         }
