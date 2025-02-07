@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 using MongoDB.EntityFrameworkCore.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using Villa.Entity.Entities;
 
 namespace Villa.DataAccess.Context
 {
-    public class VillaContext : DbContext
+    public class VillaContext : IdentityDbContext<AppUser, AppRole, ObjectId>
     {
         public VillaContext(DbContextOptions options) : base(options)
         {
@@ -25,20 +27,21 @@ namespace Villa.DataAccess.Context
         public DbSet<Product> Products { get; set; }  
         public DbSet<Quest> Quests { get; set; }  
         public DbSet<Video> Videos { get; set; }
-        public DbSet<SubHeader> SubHeaders { get; set; }    
+        public DbSet<SubHeader> SubHeaders { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuilder.Entity<Banner>().ToCollection("Banners");
-            modelBuilder.Entity<Contact>().ToCollection("Contacts");
-            modelBuilder.Entity<Counter>().ToCollection("Counters");
-            modelBuilder.Entity<Deal>().ToCollection("Deals");
-            modelBuilder.Entity<Feature>().ToCollection("Features");
-            modelBuilder.Entity<Message>().ToCollection("Messages");
-            modelBuilder.Entity<Product>().ToCollection("Products");
-            modelBuilder.Entity<Quest>().ToCollection("Quests");
-            modelBuilder.Entity<Video>().ToCollection("Videos");
-            modelBuilder.Entity<SubHeader>().ToCollection("SubHeaders");
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<Banner>().ToCollection("Banners");
+            //modelBuilder.Entity<Contact>().ToCollection("Contacts");
+            //modelBuilder.Entity<Counter>().ToCollection("Counters");
+            //modelBuilder.Entity<Deal>().ToCollection("Deals");
+            //modelBuilder.Entity<Feature>().ToCollection("Features");
+            //modelBuilder.Entity<Message>().ToCollection("Messages");
+            //modelBuilder.Entity<Product>().ToCollection("Products");
+            //modelBuilder.Entity<Quest>().ToCollection("Quests");
+            //modelBuilder.Entity<Video>().ToCollection("Videos");
+            //modelBuilder.Entity<SubHeader>().ToCollection("SubHeaders");
         }
 
 

@@ -20,7 +20,6 @@ namespace Villa.Business.Validators
             RuleFor(x => x.Title).MaximumLength(50).WithMessage("Ürün başlığı 50 karakterden fazla olamaz");
             RuleFor(x => x.Title).MinimumLength(5).WithMessage("Ürün başlığı 5 karakterden az olamaz");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Ürün fiyatı boş geçilemez");
-            RuleFor(x => x.Price).MaximumLength(0).WithMessage("Ürün fiyatı 0'dan büyük olmalıdır");
             RuleFor(x => x.BedroomCount).NotEmpty().WithMessage("Yatak odası sayısı boş geçilemez");
             RuleFor(x => x.BedroomCount).GreaterThan(0).WithMessage("Yatak odası sayısı 0'dan büyük olmalıdır");
             RuleFor(x => x.BathroomCount).NotEmpty().WithMessage("Banyo sayısı boş geçilemez");
